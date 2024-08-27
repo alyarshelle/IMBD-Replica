@@ -138,7 +138,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             }
     
             // Construct the SQL query based on input
-            if ($city) {
+            if ($city && $genre) {
                 // If city is provided, search for movies with given genre and shot exclusively in the specified city
                 $query = "SELECT MotionPicture.name, MotionPicture.rating
                             FROM MotionPicture
@@ -153,7 +153,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             LIMIT 2";
                 // Display specific message when city is selected
                 $message = "All $genre Movies In $city";
-            } else {
+            } 
+            
+            elseif($genre) {
                 // If only genre is provided, show all movies with that genre
                 $query = "SELECT MotionPicture.name, MotionPicture.rating
                             FROM MotionPicture
@@ -169,6 +171,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $result = $conn->query($query);
     
             // Output the filtered results
+
             if ($result->num_rows > 0) {
                 echo "<h2>$message</h2>"; // Displaying the appropriate message
                 echo "<table border='1'>";
@@ -189,7 +192,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             // Close the database connection
             $conn->close();
         } else {
-            echo "Please select both a city and a genre.";
+            echo "Please select both a city and a genre or just a genre.";
         }
     }
 }

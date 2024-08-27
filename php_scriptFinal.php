@@ -210,10 +210,77 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             }
         }
 
-        else{
+        if($selectTable == "People") {
+            if($selectField == "name") {
+                $query = "SELECT * FROM People WHERE name LIKE '%$searchTerm%'";
+            }
+
             // Execute query
             $result = $conn->query($query);
 
+            // Display query results
+            if ($result && $result->num_rows > 0) {
+                echo "<h2>Query Results</h2>";
+                echo "<table border='1'>";
+                // Output table headers
+                echo "<table class='table table-bordered'>";
+                echo "<thead class='thead-dark'>";
+                $header_printed = false;
+                echo "<tr>";
+                while ($fieldInfo = $result->fetch_field()) {
+                    echo "<th>" . $fieldInfo->name . "</th>";
+                }
+                echo "</tr>";
+
+                // Output data of each row
+                while ($row = $result->fetch_assoc()) {
+                    echo "<tr>";
+                    foreach ($row as $value) {
+                        echo "<td>" . $value . "</td>";
+                    }
+                    echo "</tr>";
+                }
+                echo "</table>";
+            }
+        }
+
+        if($selectTable == "User") {
+            if($selectField == "name") {
+                $query = "SELECT * FROM User WHERE name LIKE '%$searchTerm%'";
+            }
+
+            // Execute query
+            $result = $conn->query($query);
+
+            // Display query results
+            if ($result && $result->num_rows > 0) {
+                echo "<h2>Query Results</h2>";
+                echo "<table border='1'>";
+                // Output table headers
+                echo "<table class='table table-bordered'>";
+                echo "<thead class='thead-dark'>";
+                $header_printed = false;
+                echo "<tr>";
+                while ($fieldInfo = $result->fetch_field()) {
+                    echo "<th>" . $fieldInfo->name . "</th>";
+                }
+                echo "</tr>";
+
+                // Output data of each row
+                while ($row = $result->fetch_assoc()) {
+                    echo "<tr>";
+                    foreach ($row as $value) {
+                        echo "<td>" . $value . "</td>";
+                    }
+                    echo "</tr>";
+                }
+                echo "</table>";
+            }
+        }
+
+        else{
+            // Execute query
+            $result = $conn->query($query);
             // Display query results
             if ($result && $result->num_rows > 0) {
                 echo "<h2>Query Results</h2>";
@@ -316,21 +383,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         JOIN Movie ON id = mpid
                             WHERE id >= 200";
         }
-
-        if($selectField == "series name"){
+        
+        elseif($selectField == "series name"){
             $query = "SELECT MotionPicture.*, Series.* 
                         FROM MotionPicture
                         JOIN Series ON id = mpid
                             WHERE id >= 100";
         }
         
-        if($selectField == "shooting location country"){
+        elseif($selectField == "shooting location country"){
             $query = "SELECT MotionPicture.name, Location.*
                         FROM MotionPicture
                         JOIN Location ON id = mpid ";
         }
 
-        if($selectField == "genre_name"){
+        elseif($selectField == "genre_name"){
             $query = "SELECT Genre.*, MotionPicture.name, MotionPicture.rating, Location.city, Location.zip
                         From MotionPicture
                         JOIN Location ON MotionPicture.id = Location.mpid
@@ -338,10 +405,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         }
 
-
         else{
             $query = "SELECT * FROM $table_name ORDER BY $selectField";
         }
+
+        //echo $table_name;
+        //echo $selectField;
+        //echo $query;
 
         echo "<h2>$table_name</h2>";
 
