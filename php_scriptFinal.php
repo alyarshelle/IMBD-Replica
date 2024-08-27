@@ -179,35 +179,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
               WHERE country LIKE '$searchTerm'";
 
             echo "<p><strong>Filter Criteria:</strong> $sT</p>";
-        
 
-            // Execute query
-            $result = $conn->query($query);
 
-            // Display query results
-            if ($result && $result->num_rows > 0) {
-                echo "<h2>Query Results</h2>";
-                echo "<table border='1'>";
-                // Output table headers
-                echo "<table class='table table-bordered'>";
-                echo "<thead class='thead-dark'>";
-                $header_printed = false;
-                echo "<tr>";
-                while ($fieldInfo = $result->fetch_field()) {
-                    echo "<th>" . $fieldInfo->name . "</th>";
-                }
-                echo "</tr>";
-
-                // Output data of each row
-                while ($row = $result->fetch_assoc()) {
-                    echo "<tr>";
-                    foreach ($row as $value) {
-                        echo "<td>" . $value . "</td>";
-                    }
-                    echo "</tr>";
-                }
-                echo "</table>";
-            }
         }
 
         if($selectTable == "People") {
@@ -215,70 +188,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $query = "SELECT * FROM People WHERE name LIKE '%$searchTerm%'";
             }
 
-            // Execute query
-            $result = $conn->query($query);
-
-            // Display query results
-            if ($result && $result->num_rows > 0) {
-                echo "<h2>Query Results</h2>";
-                echo "<table border='1'>";
-                // Output table headers
-                echo "<table class='table table-bordered'>";
-                echo "<thead class='thead-dark'>";
-                $header_printed = false;
-                echo "<tr>";
-                while ($fieldInfo = $result->fetch_field()) {
-                    echo "<th>" . $fieldInfo->name . "</th>";
-                }
-                echo "</tr>";
-
-                // Output data of each row
-                while ($row = $result->fetch_assoc()) {
-                    echo "<tr>";
-                    foreach ($row as $value) {
-                        echo "<td>" . $value . "</td>";
-                    }
-                    echo "</tr>";
-                }
-                echo "</table>";
-            }
         }
 
         if($selectTable == "User") {
             if($selectField == "name") {
                 $query = "SELECT * FROM User WHERE name LIKE '%$searchTerm%'";
             }
-
-            // Execute query
-            $result = $conn->query($query);
-
-            // Display query results
-            if ($result && $result->num_rows > 0) {
-                echo "<h2>Query Results</h2>";
-                echo "<table border='1'>";
-                // Output table headers
-                echo "<table class='table table-bordered'>";
-                echo "<thead class='thead-dark'>";
-                $header_printed = false;
-                echo "<tr>";
-                while ($fieldInfo = $result->fetch_field()) {
-                    echo "<th>" . $fieldInfo->name . "</th>";
-                }
-                echo "</tr>";
-
-                // Output data of each row
-                while ($row = $result->fetch_assoc()) {
-                    echo "<tr>";
-                    foreach ($row as $value) {
-                        echo "<td>" . $value . "</td>";
-                    }
-                    echo "</tr>";
-                }
-                echo "</table>";
-            }
         }
 
-        else{
+       
             // Execute query
             $result = $conn->query($query);
             // Display query results
@@ -305,7 +223,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 }
                 echo "</table>";
             }
-        }
+        
     }
 
     else if(!empty($_POST["selectTable"]) && empty($_POST["selectField"]) && empty($_POST["searchTerm"])){
